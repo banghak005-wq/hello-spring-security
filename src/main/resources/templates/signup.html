@@ -48,9 +48,18 @@
                         <a th:href="@{/login}" class="text-decoration-none fw-semibold" style="color:#e94560">로그인</a>
                     </p>
                 </div>
+                <p th:text="${'실습 수행 일시: ' +
+                    #temporals.format(
+                    #temporals.createNow(),
+                    'yyyy년 MM월 dd일 (E) a hh:mm:ss',
+                    T(java.util.Locale).KOREAN
+                    ) +
+                    ' │ 학번: 2191045 │ 성명: 백인서'}">
+                </p>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>
