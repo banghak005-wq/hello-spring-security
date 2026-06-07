@@ -1,0 +1,68 @@
+<form th:action="@{/products/{id}/edit(id=${productId})}"
+      th:object="${productDto}"
+      method="post">
+
+```
+<div class="mb-3">
+    <label class="form-label fw-semibold">
+        상품명 <span class="text-danger">*</span>
+    </label>
+    <input type="text"
+           th:field="*{name}"
+           class="form-control form-control-lg"
+           placeholder="상품명을 입력하세요"
+           required/>
+</div>
+
+<div class="mb-3">
+    <label class="form-label fw-semibold">
+        가격 (원) <span class="text-danger">*</span>
+    </label>
+    <div class="input-group input-group-lg">
+        <input type="number"
+               th:field="*{price}"
+               class="form-control"
+               placeholder="0"
+               min="0"
+               required/>
+        <span class="input-group-text">원</span>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label fw-semibold">
+        재고 수량 <span class="text-danger">*</span>
+    </label>
+    <div class="input-group input-group-lg">
+        <input type="number"
+               th:field="*{stock}"
+               class="form-control"
+               placeholder="0"
+               min="0"
+               required/>
+        <span class="input-group-text">개</span>
+    </div>
+</div>
+
+<div class="mb-4">
+    <label class="form-label fw-semibold">상품 설명</label>
+    <textarea th:field="*{description}"
+              class="form-control"
+              rows="3"
+              placeholder="상품 설명을 입력하세요"></textarea>
+</div>
+
+<div class="d-flex gap-2">
+    <button type="submit"
+            class="btn btn-register text-white btn-lg flex-grow-1 fw-semibold">
+        수정
+    </button>
+
+    <a th:href="@{/products}"
+       class="btn btn-outline-secondary btn-lg px-4">
+        취소
+    </a>
+</div>
+```
+
+</form>
