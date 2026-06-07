@@ -66,3 +66,11 @@
 ```
 
 </form>
+<p th:text="${'실습 수행 일시: ' +
+    #temporals.format(
+    #temporals.createNow(),
+    'yyyy년 MM월 dd일 (E) a hh:mm:ss',
+    T(java.util.Locale).KOREAN
+    ) +
+    ' │ 학번: 2191045 │ 성명: 백인서'}">
+</p>
