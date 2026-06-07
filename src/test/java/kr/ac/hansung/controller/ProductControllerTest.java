@@ -23,6 +23,10 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
 // @SpringBootTest : 전체 Application Context 로드 (Controller, Service, Security, JPA 등 모든 Bean 등록)
 //                   Controller는 Spring Bean이므로 Spring Context 없이는 테스트 불가
 //                   webEnvironment 기본값 = MOCK (실제 Tomcat 없이 가짜 웹 환경 구성)
@@ -49,7 +53,7 @@ class ProductControllerTest {
             .build();
     }
 
-    @Test
+    /*@Test
     @WithMockUser(roles = "USER")
     @DisplayName("인증된 사용자 - 상품 목록 조회 성공 (200)")
     void listProducts_authenticated_returns200() throws Exception {
@@ -61,6 +65,27 @@ class ProductControllerTest {
             .andExpect(status().isOk())
             .andExpect(view().name("products/list"))
             .andExpect(model().attributeExists("products"));
+    }*/
+    @Test //edit 이 바뀌면서 test 코드 요구도 수정함
+    @WithMockUser(roles = "USER")
+    @DisplayName("인증된 사용자 - 상품 목록 조회 성공 (200)")
+    void listProducts_authenticated_returns200() throws Exception {
+
+        Page<Product> page = new PageImpl<>(
+            List.of(
+                new Product("Spring Boot 4 교재", 35000, "실습서", 50)
+            ),
+            PageRequest.of(0, 5),
+            1
+        );
+
+        given(productService.getProducts(any())).willReturn(page);
+        given(productService.searchProducts(any(), any())).willReturn(page);
+
+        mockMvc.perform(get("/products"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("products/list"))
+            .andExpect(model().attributeExists("productPage"));
     }
 
     @Test
